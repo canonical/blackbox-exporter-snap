@@ -11,7 +11,10 @@ apps:
     plugs: [network-bind, network]
     daemon: simple
 parts:
+  go:
+    source-tag: go1.9
   blackbox-exporter:
+    after: [go]
     plugin: go
     source: https://github.com/prometheus/blackbox_exporter.git
     go-importpath: github.com/prometheus/blackbox_exporter
