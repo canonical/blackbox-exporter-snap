@@ -8,7 +8,7 @@ confinement: strict
 apps:
   daemon:
     command: 'bin/blackbox_exporter.wrapper'
-    plugs: [network-bind, network]
+    plugs: [network-bind, network, network-control]
     daemon: simple
 parts:
   go:
