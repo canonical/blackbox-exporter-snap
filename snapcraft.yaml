@@ -2,6 +2,7 @@ name: prometheus-blackbox-exporter
 version: 0.11.0
 grade: stable
 summary: The Prometheus Blackbox Exporter
+base: core18
 description: |
     The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
 confinement: strict
@@ -11,11 +12,9 @@ apps:
     plugs: [network-bind, network, network-control]
     daemon: simple
 parts:
-  go:
-    source-tag: go1.9
   blackbox-exporter:
-    after: [go]
     plugin: go
+    go-channel: "1.9/stable"
     source: https://github.com/prometheus/blackbox_exporter.git
     go-importpath: github.com/prometheus/blackbox_exporter
     source-tag: v0.11.0
