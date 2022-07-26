@@ -1,23 +1,40 @@
 name: prometheus-blackbox-exporter
-version: 0.11.0
+version: '0.21.1'
 grade: stable
-summary: The Prometheus Blackbox Exporter
-base: core18
+summary: Prometheus Blackbox Exporter
+base: core20
 description: |
-    The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
+    The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC.
+
+    This is an unofficial snap which builds and re-packs the source provided by the Prometheus team (https://github.com/prometheus/blackbox_exporter.
+
+icon: prometheus_software_logo.svg
+source-code: https://launchpad.net/prometheus-blackbox-exporter-snap
 confinement: strict
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+  - build-on: ppc64el
+  - build-on: s390x
 apps:
   daemon:
     command: 'bin/blackbox_exporter.wrapper'
-    plugs: [network-bind, network, network-control]
+    plugs: [network-bind, network, network-observe]
     daemon: simple
 parts:
   blackbox-exporter:
     plugin: go
-    go-channel: "1.9/stable"
     source: https://github.com/prometheus/blackbox_exporter.git
-    go-importpath: github.com/prometheus/blackbox_exporter
-    source-tag: v0.11.0
+    source-type: git
+    source-tag: v${SNAPCRAFT_PROJECT_VERSION}
+  example-config:
+    plugin: dump
+    source: https://github.com/prometheus/blackbox_exporter.git
+    source-tag: v${SNAPCRAFT_PROJECT_VERSION}
+    organize:
+      example.yml: etc/blackbox-exporter/blackbox.yml.example
+    prime:
+      - etc/blackbox-exporter/blackbox.yml.example
   initial-config:
     plugin: dump
     source: .
@@ -27,11 +44,3 @@ parts:
     prime:
       - etc/blackbox-exporter/daemon_arguments.example
       - bin/blackbox_exporter.wrapper
-  example-config:
-    plugin: dump
-    source: https://github.com/prometheus/blackbox_exporter.git
-    source-tag: v0.11.0
-    organize:
-      blackbox.yml: etc/blackbox-exporter/blackbox.yml.example
-    prime:
-      - etc/blackbox-exporter/blackbox.yml.example

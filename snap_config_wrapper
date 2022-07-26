@@ -1,8 +1,10 @@
 #!/bin/sh
 
 # If it's first run copy initial config to writeable location
-test -e $SNAP_DATA/daemon_arguments || cp $SNAP/etc/blackbox-exporter/daemon_arguments.example $SNAP_DATA/daemon_arguments
-test -e $SNAP_DATA/blackbox.yml || cp $SNAP/etc/blackbox-exporter/blackbox.yml.example $SNAP_DATA/blackbox.yml
+test -e "${SNAP_DATA}/daemon_arguments" || cp "${SNAP}/etc/blackbox-exporter/daemon_arguments.example" "${SNAP_DATA}/daemon_arguments"
+test -e "${SNAP_DATA}/blackbox.yml" || cp "${SNAP}/etc/blackbox-exporter/blackbox.yml.example" "${SNAP_DATA}/blackbox.yml"
 
 . $SNAP_DATA/daemon_arguments
-$SNAP/bin/blackbox_exporter --config.file $SNAP_DATA/blackbox.yml $ARGS
+
+COMMAND="${SNAP}/bin/blackbox_exporter --config.file ${SNAP_DATA}/blackbox.yml ${ARGS}"
+eval "${COMMAND}"
