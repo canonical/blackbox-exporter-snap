@@ -6,7 +6,7 @@ base: core20
 description: |
     The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC.
 
-    This is an unofficial snap which builds and re-packs the source provided by the Prometheus team (https://github.com/prometheus/blackbox_exporter.
+    This is an unofficial snap which builds and re-packs the source provided by the Prometheus team (https://github.com/prometheus/blackbox_exporter).
 
 icon: prometheus_software_logo.svg
 source-code: https://launchpad.net/prometheus-blackbox-exporter-snap
