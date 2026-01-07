@@ -8,7 +8,7 @@
 <p align="center"><a href="https://github.com/canonical/grafana-agent-snap/actions/workflows/release-snap.yaml"><img src="https://github.com/canonical/grafana-agent-snap/actions/workflows/release-snap.yaml/badge.svg"></a></p> 
 -->
 
-<p align="center"><b>This is the snap for Prometheus Blackbox Exporter</b>, <p>The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC.</p>. This snap works on Ubuntu, Fedora, Debian, and any Linux distribution that supports <i>snapd</i>.</p>
+<p align="center"><b>This is the snap for Prometheus Blackbox Exporter</b>, <p>The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC.</p> This snap works on Ubuntu, Fedora, Debian, and any Linux distribution that supports <i>snapd</i>.</p>
 
 <p align="center"><a href="https://snapcraft.io/prometheus-blackbox-exporter"><img src="https://snapcraft.io/prometheus-blackbox-exporter/badge.svg" alt="blackbox-exporter badge"/><a/></p>
 
