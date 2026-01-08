@@ -25,6 +25,8 @@ parts:
     source: https://github.com/prometheus/blackbox_exporter.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
+    build-snaps:
+      - go/1.24/stable
   example-config:
     plugin: dump
     source: https://github.com/prometheus/blackbox_exporter.git
