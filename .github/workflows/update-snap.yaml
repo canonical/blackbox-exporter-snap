@@ -25,7 +25,7 @@ jobs:
       - id: latest-release
         uses: pozetroninc/github-action-get-latest-release@v0.8.0
         with:
-          repository: open-telemetry/opentelemetry-collector-releases
+          repository: prometheus/blackbox_exporter
           excludes: prerelease, draft
 
       - name: Checkout the Snap source
