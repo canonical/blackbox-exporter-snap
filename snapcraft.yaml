@@ -1,21 +1,19 @@
 name: prometheus-blackbox-exporter
-version: '0.21.1'
-grade: stable
+version: '0.28.0'
 summary: Prometheus Blackbox Exporter
-base: core20
+base: core24
+platforms:
+  amd64:
+  arm64:
+  ppc64el:
+  s390x:
 description: |
     The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP, ICMP and gRPC.
 
     This is an unofficial snap which builds and re-packs the source provided by the Prometheus team (https://github.com/prometheus/blackbox_exporter).
-
 icon: prometheus_software_logo.svg
-source-code: https://launchpad.net/prometheus-blackbox-exporter-snap
+source-code: https://github.com/canonical/prometheus-blackbox-exporter.git
 confinement: strict
-architectures:
-  - build-on: amd64
-  - build-on: arm64
-  - build-on: ppc64el
-  - build-on: s390x
 apps:
   daemon:
     command: 'bin/blackbox_exporter.wrapper'
@@ -27,12 +25,16 @@ parts:
     source: https://github.com/prometheus/blackbox_exporter.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
+    build-snaps:
+      - go/latest/stable
   example-config:
     plugin: dump
     source: https://github.com/prometheus/blackbox_exporter.git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
     organize:
       example.yml: etc/blackbox-exporter/blackbox.yml.example
+    stage:
+      - etc/blackbox-exporter/blackbox.yml.example
     prime:
       - etc/blackbox-exporter/blackbox.yml.example
   initial-config:
@@ -41,6 +43,10 @@ parts:
     organize:
       daemon_arguments: etc/blackbox-exporter/daemon_arguments.example
       snap_config_wrapper: bin/blackbox_exporter.wrapper
+    stage:
+      - etc/blackbox-exporter/daemon_arguments.example
+      - bin/blackbox_exporter.wrapper
     prime:
       - etc/blackbox-exporter/daemon_arguments.example
       - bin/blackbox_exporter.wrapper
+

@@ -1,0 +1,49 @@
+# Build the snap on pull_request to ensure the snap is buildable before merge to main
+name: Test Build Snap
+
+on:
+  pull_request:
+
+env:
+  SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+  LAUNCHPAD_TOKEN: ${{ secrets.LAUNCHPAD_TOKEN }}
+
+jobs:
+  # This workflow is meant to be run on PRs and we want to keep PR CI relatively short.
+  # Thus, we'll only build the snap for AMD64 and ARM64, since remote building for S390x and PPC64EL can take up to ~2 hours.
+  # On release, however, we'll remote build as well since we need all archs.
+  local-build:
+    name: Build snap (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ "ubuntu-latest", "Ubuntu_ARM64_4C_16G_03" ]
+        include:
+        - runner: "ubuntu-latest"
+          platform: amd64
+        - runner: "Ubuntu_ARM64_4C_16G_03"
+          platform: arm64
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup LXD
+        uses: canonical/setup-lxd@v0.1.3
+        with:
+          channel: latest/stable
+
+      - name: Install dependencies
+        run: |
+          sudo snap install --classic --channel edge snapcraft
+
+      - name: Build Snap
+        run: snapcraft pack
+      
+      - name: Upload snap
+        uses: actions/upload-artifact@v5
+        with:
+          name: prometheus-blackbox-exporter-${{ matrix.platform }}-snap
+          path: "*.snap"
+
+  
